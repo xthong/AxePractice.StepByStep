@@ -1,4 +1,5 @@
 ﻿using System;
+using Manualfac.Services;
 
 namespace Manualfac
 {
@@ -15,7 +16,10 @@ namespace Manualfac
              * Please support registration by type.
              */
 
-            throw new NotImplementedException();
+            Type serviceType = typeof(TService);
+            if (serviceType == null) throw new ArgumentNullException(nameof(serviceType));
+            Service = new TypedService(serviceType);
+            return this;
 
             #endregion
         }
@@ -27,9 +31,12 @@ namespace Manualfac
             /*
              * Please support registration by both type and name.
              */
+            Type serviceType = typeof(TService);
+            if (name == null) throw new ArgumentNullException(nameof(name));
+            if (serviceType == null) throw new ArgumentNullException(nameof(serviceType));
 
-            throw new NotImplementedException();
-
+            Service = new TypedNameService(serviceType, name);
+            return this;
             #endregion
         }
 
