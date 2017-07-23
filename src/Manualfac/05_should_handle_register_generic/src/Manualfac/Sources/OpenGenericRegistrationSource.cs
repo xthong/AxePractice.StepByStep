@@ -1,5 +1,6 @@
 ﻿using System;
 using Manualfac.Activators;
+using Manualfac.Services;
 
 namespace Manualfac.Sources
 {
@@ -27,7 +28,17 @@ namespace Manualfac.Sources
              * generic type of genericService. If it is matched, then an concrete component
              * registration needed wll be invoked.
              */
-            throw new NotImplementedException();
+
+            var serviceWithType = service as IServiceWithType;
+            if(serviceWithType == null) return null;
+
+            var concreteType = serviceWithType.ServiceType;
+            if (!concreteType.IsGenericType || !concreteType.IsConstructedGenericType) return null;
+
+            if (!serviceWithType.ChangeType(concreteType.GetGenericTypeDefinition()).Equals(genericService)) return null;
+
+            var makedGenericType = implementorType.MakeGenericType(concreteType.GenericTypeArguments);
+            return new ComponentRegistration(service, new ReflectiveActivator(makedGenericType));
 
             #endregion
         }
