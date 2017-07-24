@@ -39,11 +39,26 @@
   <ItemGroup>
     <Compile Include="ActionDescriptor.cs" />
     <Compile Include="ControllerActionInvoker.cs" />
+    <Compile Include="DefaultControllerFactory.cs" />
+    <Compile Include="HttpConfiguration.cs" />
+    <Compile Include="HttpServer.cs" />
+    <Compile Include="IControllerFactory.cs" />
+    <Compile Include="DefaultDependencyResolver.cs" />
     <Compile Include="HttpController.cs" />
+    <Compile Include="DefaultHttpControllerTypeResolver.cs" />
+    <Compile Include="IDependencyResolver.cs" />
+    <Compile Include="IHttpControllerTypeResolver.cs" />
+    <Compile Include="MethodAttributes\HttpDelete.cs" />
+    <Compile Include="MethodAttributes\HttpGet.cs" />
+    <Compile Include="MethodAttributes\HttpPost.cs" />
+    <Compile Include="MethodAttributes\HttpPut.cs" />
+    <Compile Include="MethodAttributes\IMethodProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routing\HttpRoute.cs" />
+    <Compile Include="Routing\HttpRouteCollection.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LocalApi_01.png" />
+    <None Include="LocalApi.pdf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

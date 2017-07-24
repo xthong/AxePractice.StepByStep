@@ -40,10 +40,15 @@
     <Compile Include="ActionDescriptor.cs" />
     <Compile Include="ControllerActionInvoker.cs" />
     <Compile Include="HttpController.cs" />
+    <Compile Include="MethodAttributes\HttpDelete.cs" />
+    <Compile Include="MethodAttributes\HttpGet.cs" />
+    <Compile Include="MethodAttributes\HttpPost.cs" />
+    <Compile Include="MethodAttributes\HttpPut.cs" />
+    <Compile Include="MethodAttributes\IMethodProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="LocalApi_01.png" />
+    <Content Include="LocalApi.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
