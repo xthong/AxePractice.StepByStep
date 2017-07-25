@@ -39,7 +39,6 @@ namespace Manualfac
              * Create a new lifetime scope. The created scope has no relationship except the
              * component registry.
              */
-            if(componentRegistry == null) throw new ArgumentNullException(nameof(componentRegistry));
             return new LifetimeScope(componentRegistry);
 
             #endregion
