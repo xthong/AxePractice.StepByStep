@@ -25,7 +25,7 @@ namespace Manualfac
 
             #region Please initialize root scope
 
-            throw new NotImplementedException();
+            RootScope = parent != null? parent.RootScope : this;
 
             #endregion
         }
@@ -57,8 +57,20 @@ namespace Manualfac
 
             #region Please implement this method
 
-            throw new NotImplementedException();
+            if (registration == null) throw new ArgumentNullException(nameof(registration));
+            if(sharedInstances.ContainsKey(registration.Service))
+            {
+                return sharedInstances[registration.Service];
+            }
 
+            var component = registration.Activator.Activate(registration.Lifetime.FindLifetimeScope(this));
+            if(registration.Sharing == InstanceSharing.Shared)
+            {
+                sharedInstances[registration.Service] = component;
+            }
+
+            Disposer.AddItemsToDispose(component);
+            return component;
             #endregion
         }
 
@@ -70,7 +82,7 @@ namespace Manualfac
              * Create a child life-time scope in this method.
              */
 
-            throw new NotImplementedException();
+            return new LifetimeScope(componentRegistry, this);
 
             #endregion
         }
@@ -84,7 +96,12 @@ namespace Manualfac
              * We extract this method for isolation of responsibility.
              */
 
-            throw new NotImplementedException();
+            ComponentRegistration registration;
+            if(componentRegistry.TryGetRegistration(service, out registration))
+            {
+                return registration;
+            }
+            throw new DependencyResolutionException();
 
             #endregion
         }
