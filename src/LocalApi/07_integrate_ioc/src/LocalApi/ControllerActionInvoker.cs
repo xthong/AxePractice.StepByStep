@@ -32,6 +32,8 @@ namespace LocalApi
              * lifetime scopes for all items created during this request.
              */
             IDependencyScope scope = null;
+            scope = context.GetDependencyScope();
+
             #endregion
 
             try

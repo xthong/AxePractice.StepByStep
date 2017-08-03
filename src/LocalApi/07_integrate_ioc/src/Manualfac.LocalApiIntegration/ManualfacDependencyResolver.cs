@@ -5,6 +5,7 @@ namespace Manualfac.LocalApiIntegration
 {
     public class ManualfacDependencyResolver : IDependencyResolver
     {
+
         #region Please implement the following class
 
         /*
@@ -13,25 +14,30 @@ namespace Manualfac.LocalApiIntegration
          * 
          * You can add a public/internal constructor and non-public fields if needed.
          */
+        readonly Container rootScope;
 
         public ManualfacDependencyResolver(Container rootScope)
         {
-            throw new NotImplementedException();
+            if (rootScope == null) throw new ArgumentNullException(nameof(rootScope));
+
+            this.rootScope = rootScope;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            rootScope.Dispose();
         }
 
         public object GetService(Type type)
         {
-            throw new NotImplementedException();
+            return rootScope.Resolve(type);
         }
+
 
         public IDependencyScope BeginScope()
         {
-            throw new NotImplementedException();
+            var lifetimeScope = rootScope.BeginLifetimeScope();
+            return new ManualfacDependencyScope(lifetimeScope);
         }
 
         #endregion
