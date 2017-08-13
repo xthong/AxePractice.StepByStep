@@ -1,37 +1,37 @@
 ﻿using System;
 using System.Net.Http;
 using System.Web.Http;
+using Autofac;
 using WebApplication;
 
 namespace WebApi.Test
 {
     public class TestBase : IDisposable
     {
-        readonly HttpConfiguration httpConfiguration;
-        readonly HttpServer httpServer;
-        protected HttpClient Client {get;}
+        readonly HttpConfiguration httpConfiguration = new HttpConfiguration();
+        HttpClient httpClient;
+        HttpServer httpServer;
 
-        public TestBase()
+        protected void RegisterFakeInstance(Action<ContainerBuilder> action)
         {
-            httpConfiguration = new HttpConfiguration();
-            BootStrapper.Init(httpConfiguration);
+            new BootStrapper () {BeforeBuildingContainerBuilder = action}.Init(httpConfiguration);
             httpServer = new HttpServer(httpConfiguration);
-            Client = CreateHttpClient(httpServer);
         }
 
-        static HttpClient CreateHttpClient(HttpServer httpServer)
+        public  HttpClient CreateHttpClient()
         {
-            var client = new HttpClient(httpServer)
+            httpClient = new HttpClient(httpServer)
             {
                 BaseAddress = new Uri("http://baidu.com")
             };
-            return client;
+            return httpClient;
         }
 
         public void Dispose()
         {
-            Client?.Dispose();
+            httpClient?.Dispose();
             httpServer?.Dispose();
+            httpConfiguration?.Dispose();
         }
     }
 }
