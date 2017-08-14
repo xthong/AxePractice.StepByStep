@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Net.Http;
 using System.Reflection;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Routing;
 using Autofac;
 using Autofac.Integration.WebApi;
 
@@ -38,6 +40,7 @@ namespace WebApplication
         {
             config.Routes.MapHttpRoute("message", "message", new {controller = "message"});
             config.Routes.MapHttpRoute("get message by id", "message/{id}", new {controller = "message", action = "GetById"});
+            config.Routes.MapHttpRoute("get status", "status", new {controller = "status"}, new {httpMethod = new HttpMethodConstraint(HttpMethod.Get)}, new RequestDurationHandler(config));
         }
 
         void BuildContainer(HttpConfiguration config)

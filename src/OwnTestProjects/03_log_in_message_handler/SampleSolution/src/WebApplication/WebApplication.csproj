@@ -136,7 +136,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\MessageController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="RequestDurationFilter.cs" />
+    <Compile Include="RequestDurationHandler.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
