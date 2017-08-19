@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace HandleResponsePractice
@@ -19,10 +22,14 @@ namespace HandleResponsePractice
 
             // I just want { id, sizes } here. Please deserialize the content. You cannot
             // change any code beyond the region.
+            object content = JsonConvert.DeserializeAnonymousType(await response.Content.ReadAsStringAsync(),
+                new
+                {
+                    id = default(int),
+                    sizes = default(IEnumerable<string>)
+                });
 
             #endregion
-
-            object content = null;
 
             Assert.Equal(2, content.GetPublicDeclaredProperties().Length);
             Assert.Equal(1, content.GetPropertyValue<int>("id"));
@@ -38,14 +45,17 @@ namespace HandleResponsePractice
 
             object content = await response.Content.ReadAsAsync<object>();
 
-            int id = default(int);
-            string name = default(string);
-            IEnumerable<string> sizes = default(IEnumerable<string>);
+            var result1 = (JObject)content;
+            var id = result1.GetValue("id").Value<int>();
+            var name = result1.GetValue("name").Value<string>();
+            var sizesArray = (JArray)result1["sizes"];
+            var sizes = sizesArray.ToObject<IEnumerable<string>>();
 
             #region Please modifies the following code to pass the test
 
             // I want { id, name, sizes } here. Please get properties from the content. 
             // You cannot change any code beyond the region.
+
             
             #endregion
             
