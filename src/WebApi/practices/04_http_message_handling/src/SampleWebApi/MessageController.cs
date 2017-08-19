@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http;
-using System.Runtime.Serialization;
 using System.Web.Http;
 
 namespace SampleWebApi
@@ -20,10 +19,8 @@ namespace SampleWebApi
         }
     }
 
-    [DataContract]
     public class DataMessage
     {
-        [DataMember]
         public string message { get; set;}
     }
 }
